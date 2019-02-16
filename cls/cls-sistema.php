@@ -178,131 +178,13 @@ class clSis
         }
 	}
 	
-	//Clientes
-	public function registrarCliente()
-    {   
-        /*Preparacion de variables*/
-        
-        $eCodCliente = $_POST['eCodCliente'] ? $_POST['eCodCliente'] : false;
-        $tNombre = "'".utf8_encode($_POST['tNombre'])."'";
-        $tApellidos = "'".utf8_encode($_POST['tApellidos'])."'";
-        $tCorreo = "'".$_POST['tCorreo']."'";
-        $tTelefonoFijo = "'".$_POST['tTelefonoFijo']."'";
-        $tTelefonoMovil = "'".$_POST['tTelefonoMovil']."'";
-        $tComentarios = $_POST['tComentarios'] ? "'".$_POST['tComentarios']."'" : "Sin comentarios";
-		$eCodUsuario = $_SESSION['sessionAdmin'][0]['eCodUsuario'];
-		$fhFechaCreacion = "'".date('Y-m-d H:i')."'";
-        
-        if(!$eCodCliente)
-        {
-            $insert = " INSERT INTO CatClientes
-            (
-            tNombres,
-            tApellidos,
-            tCorreo,
-            tTelefonoFijo,
-            tTelefonoMovil,
-            eCodUsuario,
-            fhFechaCreacion,
-			eCodEstatus,
-            tComentarios
-			)
-            VALUES
-            (
-            $tNombre,
-            $tApellidos,
-            $tCorreo,
-            $tTelefonoFijo,
-            $tTelefonoMovil,
-            $eCodUsuario,
-            $fhFechaCreacion,
-			3,
-            $tComentarios
-            )";
-        }
-        else
-        {
-            $insert = "UPDATE 
-                            CatClientes
-                        SET
-                            tNombres= $tNombre,
-                            tApellidos= $tApellidos,
-                            tCorreo= $tCorreo,
-                            tTelefonoFijo= $tTelefonoFijo,
-                            tTelefonoMovil= $tTelefonoMovil,
-                            tComentarios = $tComentarios
-                            WHERE
-                            eCodCliente = ".$eCodCliente;
-        }
-        
-        $rsPublicacion = mysql_query($insert);
-        //return $insert;
-		//echo $insert;
-        return $rsPublicacion ? true : false;
-    }
-	
-	//Servicios
-	public function registrarServicio()
-    {   
-        /*Preparacion de variables*/
-        
-        $eCodServicio = $_POST['eCodServicio'] ? $_POST['eCodServicio'] : false;
-        $tNombre = "'".utf8_encode($_POST['tNombre'])."'";
-        $tDescripcion = "'".utf8_encode($_POST['tDescripcion'])."'";
-        $dPrecio = $_POST['dPrecio'];
-        
-        if(!$eCodServicio)
-        {
-            $insert = " INSERT INTO CatServicios
-            (
-            tNombre,
-            tDescripcion,
-            dPrecioVenta
-			)
-            VALUES
-            (
-            $tNombre,
-            $tDescripcion,
-            $dPrecio
-            )";
-        }
-        else
-        {
-            $insert = "UPDATE 
-                            CatServicios
-                        SET
-                            tNombre= $tNombre,
-                            tDescripcion= $tDescripcion,
-                            dPrecioVenta= $dPrecio
-                            WHERE
-                            eCodServicio = ".$eCodServicio;
-        }
-        
-        $rsPublicacion = mysql_query($insert);
-        
-        $select = "SELECT MAX(eCodServicio) eCodServicio FROM CatServicios";
-        $rServicio = mysql_fetch_array(mysql_query($select));
-		
-		$eCodServicio = $eCodServicio ? $eCodServicio : $rServicio{'eCodServicio'};
-		
-		mysql_query("DELETE FROM RelServiciosInventario WHERE eCodServicio = $eCodServicio");
-	foreach($_POST['eCodInventario'] as $key => $eCodInventario)
-	{
-		$ePiezas = $_POST['ePiezas'.$key];
-		mysql_query("INSERT INTO RelServiciosInventario (eCodServicio, eCodInventario, ePiezas) VALUES ($eCodServicio, $eCodInventario, $ePiezas)");
-	}
-		
-        //return $insert;
-		//echo $insert;
-        return $rsPublicacion ? true : false;
-    }
-	
 	//Inventario
 	public function registrarInventario()
     {   
         /*Preparacion de variables*/
         
         $eCodInventario = $_POST['eCodInventario'] ? $_POST['eCodInventario'] : false;
+        $tCodInventario = "'".$_POST['tCodInventario']."'";
 		$eCodTipoInventario = $_POST['eCodTipoInventario'];
         $tNombre = "'".$_POST['tNombre']."'";
         $tMarca = "'".$_POST['tMarca']."'";
@@ -317,6 +199,7 @@ class clSis
             $insert = " INSERT INTO CatInventario
             (
 			eCodTipoInventario,
+            tCodInventario,
             tNombre,
             tMarca,
             tDescripcion,
@@ -328,6 +211,7 @@ class clSis
             VALUES
             (
             $eCodTipoInventario,
+            $tCodInventario,
             $tNombre,
             $tMarca,
             $tDescripcion,
@@ -343,6 +227,7 @@ class clSis
                             CatInventario
                         SET
                             eCodTipoInventario=$eCodTipoInventario,
+                            tCodInventario=$tCodInventario,
             				tNombre=$tNombre,
             				tMarca=$tMarca,
             				tDescripcion=$tDescripcion,

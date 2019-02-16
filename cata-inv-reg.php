@@ -63,6 +63,7 @@ function validar()
 var bandera = false;
 var mensaje = "";
 var tNombre = document.getElementById("tNombre");
+var tCodInventario = document.getElementById("tCodInventario");
 var eCodTipoInventario = document.getElementById("eCodTipoInventario");
 var tDescripcion = document.getElementById("tDescripcion");
 var dPrecioInterno = document.getElementById("dPrecioInterno");
@@ -73,6 +74,11 @@ var ePiezas = document.getElementById("ePiezas");
     if(!tNombre.value)
     {
         mensaje += "* Nombre\n";
+        bandera = true;
+    };
+    if(!tCodInventario.value)
+    {
+        mensaje += "* Nombre Corto\n";
         bandera = true;
     };
 	if(!eCodTipoInventario.value)
@@ -160,6 +166,10 @@ var ePiezas = document.getElementById("ePiezas");
 			  </select>
            </div>
 		   <div class="form-group">
+              <label>Nombre Corto</label>
+              <input type="text" class="form-control" name="tCodInventario" id="tCodInventario" placeholder="Nombre Corto" value="<?=($rPublicacion{'tCodInventario'})?>" maxlength="6" <?=$rPublicacion{'tCodInventario'} ? "readonly" : ""?>>
+           </div>
+           <div class="form-group">
               <label>Nombre</label>
               <input type="text" class="form-control" name="tNombre" id="tNombre" placeholder="Nombre" value="<?=($rPublicacion{'tNombre'})?>" >
            </div>
