@@ -109,6 +109,24 @@ setTimeout(function(){
 												?>
 											</select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="country" class=" form-control-label">Bodega</label>
+											<select id="eCodBodega" name="eCodBodega" class="form-control col-md-6">
+											<option value="">Seleccione</option>
+												<?
+												$select = "SELECT * FROM CatBodegas".
+															
+															" ORDER BY eCodBodega ASC";
+												$rsPerfiles = mysql_query($select);
+												while($rPerfil = mysql_fetch_array($rsPerfiles))
+												{
+													?>
+												<option value="<?=$rPerfil{'eCodBodega'}?>" <?=($rUsuario{'eCodBodega'}==$rPerfil{'eCodBodega'}) ? 'selected="selected"': '' ?>><?=$rPerfil{'tNombre'}?></option>
+												<?
+												}
+												?>
+											</select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

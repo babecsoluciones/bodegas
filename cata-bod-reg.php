@@ -4,7 +4,7 @@ require_once("cls/cls-sistema.php");
 $clSistema = new clSis();
 session_start();
 
-$select = "SELECT * FROM CatClientes WHERE eCodCliente = ".$_GET['eCodCliente'];
+$select = "SELECT * FROM CatBodegas WHERE eCodBodega = ".$_GET['eCodBodega'];
 $rsPublicacion = mysql_query($select);
 $rPublicacion = mysql_fetch_array($rsPublicacion);
 
@@ -12,13 +12,13 @@ $rPublicacion = mysql_fetch_array($rsPublicacion);
 <?
 if($_POST)
 {
-    $res = $clSistema -> registrarCliente();
+    $res = $clSistema -> registrarBodega();
     
     if($res)
     {
         ?>
             <div class="alert alert-success" role="alert">
-                El cliente se guard&oacute; correctamente!
+                La Bodega se guard&oacute; correctamente!
             </div>
 <script>
 setTimeout(function(){
@@ -44,34 +44,17 @@ function validar()
 var bandera = false;
 var mensaje = "";
 var tNombre = document.getElementById("tNombre");
-var tApellidos = document.getElementById("tApellidos");
-var tCorreo = document.getElementById("tCorreo");
-var tTelefonoFijo = document.getElementById("tTelefonoFijo");
-var tTelefonoMovil = document.getElementById("tTelefonoMovil");
+var tUbicacion = document.getElementById("tUbicacion");
+
 
     if(!tNombre.value)
     {
         mensaje += "* Nombre\n";
         bandera = true;
     };
-    if(!tApellidos.value)
+    if(!tUbicacion.value)
     {
-        mensaje += "* Apellidos\n";
-        bandera = true;
-    };
-    if(!tCorreo.value)
-    {
-        mensaje += "* E-mail\n";
-        bandera = true;
-    };
-    if(!tTelefonoFijo.value)
-    {
-        mensaje += "* Telefono Fijo\n";
-        bandera = true;
-    };
-    if(!tTelefonoMovil.value)
-    {
-        mensaje += "* Telefono Movil\n";
+        mensaje += "* Ubicacion\n";
         bandera = true;
     };
     
@@ -100,10 +83,10 @@ var tTelefonoMovil = document.getElementById("tTelefonoMovil");
 <div class="row">
     <div class="col-lg-12">
     <form id="datos" name="datos" action="<?=$_SERVER['REQUEST_URI']?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="eCodCliente" value="<?=$_GET['eCodCliente']?>">
+        <input type="hidden" name="eCodCliente" value="<?=$_GET['eCodBodega']?>">
         <input type="hidden" name="eAccion" id="eAccion">
                             <div class="col-lg-12">
-								<h2 class="title-1 m-b-25"><?=$_GET['eCodCliente'] ? 'Actualizar ' : '+ '?>Cliente</h2>
+								<h2 class="title-1 m-b-25"><?=$_GET['eCodBodega'] ? 'Actualizar ' : '+ '?>Bodega</h2>
                                 <div class="card col-lg-12">
                                     
                                     <div class="card-body card-block">
@@ -113,28 +96,13 @@ var tTelefonoMovil = document.getElementById("tTelefonoMovil");
            </div>
            <div class="form-group">
               <label>Nombre</label>
-              <input type="text" class="form-control" name="tNombre" id="tNombre" placeholder="Nombre" value="<?=utf8_decode($rPublicacion{'tNombres'})?>" >
+              <input type="text" class="form-control" name="tNombre" id="tNombre" placeholder="Nombre" value="<?=utf8_decode($rPublicacion{'tNombre'})?>" >
            </div>
-           <div class="form-group">
-              <label>Apellidos</label>
-              <input type="text" class="form-control" name="tApellidos" id="tApellidos" placeholder="Apellidos" value="<?=utf8_decode($rPublicacion{'tApellidos'})?>" >
-           </div>
-           <div class="form-group">
-              <label>E-mail</label>
-              <input type="email" class="form-control" name="tCorreo" id="tCorreo" placeholder="E-mail" value="<?=utf8_decode($rPublicacion{'tCorreo'})?>" >
-           </div>
-           <div class="form-group">
-              <label>Tel&eacute;fono Fijo</label>
-              <input type="text" class="form-control" name="tTelefonoFijo" id="tTelefonoFijo" placeholder="Tel&eacute;fono Fijo" value="<?=utf8_decode($rPublicacion{'tTelefonoFijo'})?>" >
-           </div>
-           <div class="form-group">
-              <label>Tel&eacute;fono M&oacute;vil</label>
-              <input type="text" class="form-control" name="tTelefonoMovil" id="tTelefonoMovil" placeholder="Tel&eacute;fono M&oacute;vil" value="<?=utf8_decode($rPublicacion{'tTelefonoMovil'})?>" >
-           </div>
+           
             <div class="form-group">
-              <label>Comentarios</label>
+              <label>Ubicaci&oacute;n</label>
 
-              <textarea rows="5" class="form-control" name="tComentarios" id="tComentarios" ><?=utf8_decode($rPublicacion{'tComentarios'})?></textarea>
+              <textarea rows="5" class="form-control" name="tUbicacion" id="tUbicacion" ><?=utf8_decode(base64_decode($rPublicacion{'tUbicacion'}))?></textarea>
 
            </div>
                                         <!--campos-->

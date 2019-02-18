@@ -105,13 +105,14 @@ class clSis
         $tPasswordAcceso = $_POST['tPasswordAcceso'] ? "'".base64_encode($_POST['tPasswordAcceso'])."'" : false;
         $tPasswordOperaciones = $_POST['tPasswordOperaciones'] ? "'".base64_encode($_POST['tPasswordOperaciones'])."'" : false;
         $tCorreo = $_POST['tCorreo'] ? "'".$_POST['tCorreo']."'" : false;
+        $eCodBodega = $_POST['eCodBodega'] ? "'".$_POST['eCodBodega']."'" : false;
         $bAll = $_POST['bAll'] ? 1 : 0;
         
         $fhFechaCreacion = "'".date('Y-m-d H:i:s')."'";
         
         if(!$eCodUsuario)
         {
-            $insert = "INSERT INTO SisUsuarios (tNombre, tApellidos, tCorreo, tPasswordAcceso, tPasswordOperaciones,  eCodEstatus, eCodPerfil, fhFechaCreacion,bAll) VALUES ($tNombre, $tApellidos, $tCorreo, $tPasswordAcceso, $tPasswordOperaciones, 3, $eCodPerfil, $fhFechaCreacion,$bAll)";
+            $insert = "INSERT INTO SisUsuarios (tNombre, tApellidos, tCorreo, tPasswordAcceso, tPasswordOperaciones,  eCodEstatus, eCodPerfil, fhFechaCreacion,bAll,eCodBodega) VALUES ($tNombre, $tApellidos, $tCorreo, $tPasswordAcceso, $tPasswordOperaciones, 3, $eCodPerfil, $fhFechaCreacion,$bAll,$eCodBodega)";
         }
         else
         {
@@ -119,7 +120,8 @@ class clSis
             tPasswordAcceso = $tPasswordAcceso,
             tPasswordOperaciones = $tPasswordOperaciones,
             eCodPerfil = $eCodPerfil,
-            bAll = $bAll
+            bAll = $bAll,
+            eCodBodega = $eCodBodega
             WHERE
             eCodUsuario = $eCodUsuario";
         }
@@ -177,6 +179,45 @@ class clSis
             return false;
         }
 	}
+    
+    //bodegas
+	public function registrarBodega()
+    {   
+        /*Preparacion de variables*/
+        
+        $eCodBodega = $_POST['eCodBodega'] ? $_POST['eCodBodega'] : false;
+        $tNombre = "'".utf8_encode($_POST['tNombre'])."'";
+        $tUbicacion = "'".base64_encode($_POST['tUbicacion'])."'";
+        
+        if(!$eCodCliente)
+        {
+            $insert = " INSERT INTO CatBodegas
+            (
+            tNombre,
+            tUbicacion
+			)
+            VALUES
+            (
+            $tNombre,
+            $tUbicacion
+            )";
+        }
+        else
+        {
+            $insert = "UPDATE 
+                            CatBodegas
+                        SET
+                            tNombre= $tNombre,
+                            tUbicacion= $tUbicacion
+                            WHERE
+                            eCodBodega = ".$eCodBodega;
+        }
+        
+        $rsPublicacion = mysql_query($insert);
+        //return $insert;
+		//echo $insert;
+        return $rsPublicacion ? true : false;
+    }
 	
 	//Inventario
 	public function registrarInventario()
