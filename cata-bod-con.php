@@ -50,7 +50,7 @@ function detalles(eCodBodega)
 											$rsPublicaciones = mysql_query($select);
 											while($rPublicacion = mysql_fetch_array($rsPublicaciones))
 											{
-                                                $detalle = file_exists("cata-bod-det.php") ? '' : 'disabled';
+                                                $detalle = file_exists("cata-bod-det.php") ? '' : 'disabled="disabled" style="display:none;"';
                                                 $menuEmergente = '<div class="dropdown">
                                                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                             '.sprintf("%07d",$rPublicacion{'eCodBodega'}).'
