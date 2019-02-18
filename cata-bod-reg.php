@@ -22,7 +22,7 @@ if($_POST)
             </div>
 <script>
 setTimeout(function(){
-    window.location="?tCodSeccion=cata-cli-con";
+    window.location="?tCodSeccion=cata-bod-con";
 },2500);
 </script>
 <?

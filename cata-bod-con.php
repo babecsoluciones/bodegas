@@ -45,7 +45,7 @@ function detalles(eCodBodega)
 											$select = "	SELECT 
 															*
 														FROM
-															Catbodegas cc
+															CatBodegas cc
 														 ORDER BY cc.eCodBodega ASC";
 											$rsPublicaciones = mysql_query($select);
 											while($rPublicacion = mysql_fetch_array($rsPublicaciones))
