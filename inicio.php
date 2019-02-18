@@ -16,6 +16,7 @@ $bAll = $clSistema->validarPermiso($_GET['tCodSeccion']);
     $rsTiposInventario = mysql_query($select);
     while($rTipoInventario = mysql_fetch_array($rsTiposInventario))
     {
+        echo "SELECT COUNT(*) FROM CatInventario WHERE eCodTipoInventario = ".$rTipoInventario{'eCodTipoInventario'};
         $contador = mysql_num_rows(mysql_query("SELECT COUNT(*) FROM CatInventario WHERE eCodTipoInventario = ".$rTipoInventario{'eCodTipoInventario'}));
         ?>
     <div class="col-md-6 col-lg-3">
